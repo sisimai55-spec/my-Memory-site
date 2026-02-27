@@ -1,4 +1,4 @@
-const API = "YOUR_WORKER_URL";
+const API = "https://calm-dawn-dfef.sisimai55.workers.dev/";
 
 async function login() {
     const token = document.getElementById("token").value;
