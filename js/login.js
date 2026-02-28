@@ -1,30 +1,44 @@
 async function login() {
 
-  const tokenInput =
+  const username =
+    document.getElementById("username").value.trim();
+
+  const token =
     document.getElementById("token").value.trim();
 
-  // GitHub APIから取得
-  const res = await fetch(
-    "https://api.github.com/repos/sisimai55-spec/my-photo-text-site/contents/data/tokens.json?ref=main"
-  );
+  const url =
+    "https://api.github.com/repos/sisimai55-spec/my-photo-text-site/contents/data/tokens.json?ref=main";
 
-  const data = await res.json();
+  const res = await fetch(url);
+  const apiData = await res.json();
 
-  // ⭐ 超重要：Base64 → 普通の文字へ変換
-  const decoded = atob(data.content);
+  const text =
+    atob(apiData.content.replace(/\n/g,""));
 
-  const json = JSON.parse(decoded);
+  const json = JSON.parse(text);
 
-  const tokens = json.tokens;
+  const users = json.users;
 
-  // 判定
-  if (tokens.includes(tokenInput)) {
+  let success = false;
 
-    localStorage.setItem("token", tokenInput);
+  // ===== トークンだけチェック =====
+  for (const name in users) {
+    if (users[name] === token) {
+      success = true;
+      localStorage.setItem("user", name);
+    }
+  }
 
+  // ===== ユーザ名も入力された場合 =====
+  if (username && users[username] === token) {
+    success = true;
+    localStorage.setItem("user", username);
+  }
+
+  if (success) {
+    localStorage.setItem("token", token);
     location.href = "top.html";
-
   } else {
-    alert("トークンが違います");
+    alert("ログインできません");
   }
 }
