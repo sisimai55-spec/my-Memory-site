@@ -8,7 +8,7 @@ msg.innerText="読み込み中...";
 try{
 
 const url =
-`https://api.github.com/repos/${OWNER}/${REPO}/contents/${TOKEN_FILE}`;
+`https://api.github.com/repos/${OWNER}/${REPO}/contents/${TOKEN_FILE}?ref=${BRANCH}`;
 
 msg.innerText="GitHub接続中...";
 
