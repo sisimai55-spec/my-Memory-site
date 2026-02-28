@@ -1,11 +1,12 @@
-async function login() {
+// ユーザー名とランダムトークンのセット
+const users = {
+  "keikun1704": "Ab3Xy9K2LmPq8Rt5"
+};
+
+function login() {
   const userToken = document.getElementById("token").value.trim();
 
-  // JSON からユーザー名とトークンのセットを取得
-  const res = await fetch("users.json");
-  const users = await res.json();
-
-  // JSON の中に入力トークンがあればログイン成功
+  // 入力したトークンが users にあるかチェック
   let success = false;
   for(const username in users){
     if(users[username] === userToken){
