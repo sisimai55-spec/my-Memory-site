@@ -1,41 +1,32 @@
-async function loadData() {
+async function load(){
 
-  const token = prompt("トークンを入力してください");
-  if (!token) {
-    alert("トークンが必要です");
-    return;
-  }
+const api=
+`https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_FILE}`;
 
-  const res = await fetch("/list?token=" + token);
+const res=await fetch(api);
+const json=await res.json();
 
-  if (res.status !== 200) {
-    alert("閲覧できません");
-    return;
-  }
+const data=JSON.parse(
+decodeURIComponent(escape(atob(json.content)))
+);
 
-  const data = await res.json();
+const list=document.getElementById("list");
 
-  const list = document.getElementById("list");
-  list.innerHTML = "";
+data.reverse().forEach(d=>{
 
-  data.forEach(item => {
+const div=document.createElement("div");
+div.className="card";
 
-    const div = document.createElement("div");
-    div.className = "card";
+div.innerHTML=`
+<b>${d.user}</b><br>
+${d.time}<br><br>
+${d.text||""}
+${d.photo?`<img src="${d.photo}">`:""}
+`;
 
-    // テキスト表示
-    if (item.type === "text") {
-      div.innerText = item.user + " : " + item.content;
-    }
+list.appendChild(div);
 
-    // 写真表示
-    if (item.type === "photo") {
-      const img = document.createElement("img");
-      img.src = item.url;
-      img.width = 200;
-      div.appendChild(img);
-    }
-
-    list.appendChild(div);
-  });
+});
 }
+
+load();
