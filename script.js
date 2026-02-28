@@ -1,21 +1,28 @@
-// ユーザー名とランダムトークンのセット
-const users = {
-  "keikun1704": "Ab3Xy9K2LmPq8Rt5"
-};
+const API = "https://my-photo-text-site.sisimai55.workers.dev";
 
-// ボタンを取得してイベント登録
-const loginBtn = document.querySelector("button");
-loginBtn.addEventListener("click", () => {
-  const userToken = document.getElementById("token").value.trim();
+async function login() {
+    const token = document.getElementById("token").value;
 
-  let success = false;
-  for(const username in users){
-    if(users[username] === userToken){
-      success = true;
-      break;
-    }
-  }
+    const res = await fetch(API + "/check?token=" + token);
+    const data = await res.text();
 
-  const result = document.getElementById("result");
-  result.textContent = success ? "ログイン成功！✨" : "トークンが違うよ❌";
-});
+    document.getElementById("result").innerText = data;
+}
+
+async function addToken() {
+    const token = document.getElementById("newToken").value;
+
+    const res = await fetch(API + "/add?token=" + token);
+    const data = await res.text();
+
+    document.getElementById("adminResult").innerText = data;
+}
+
+async function deleteToken() {
+    const token = document.getElementById("deleteToken").value;
+
+    const res = await fetch(API + "/delete?token=" + token);
+    const data = await res.text();
+
+    document.getElementById("adminResult").innerText = data;
+}
