@@ -1,20 +1,57 @@
-const API="https://my-photo-text-site.sisimai55.workers.dev/";
+async function save(){
 
- async function save(){
+await requireLogin();
 
-  const token=localStorage.getItem("token");
+const user=document.getElementById("user").value;
+const text=document.getElementById("text").value;
+const file=document.getElementById("photo").files[0];
 
-  const fd=new FormData();
-  fd.append("user",document.getElementById("user").value);
-  fd.append("text",document.getElementById("text").value);
+const api=
+`https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_FILE}`;
 
-  const file=document.getElementById("photo").files[0];
-  if(file) fd.append("photo",file);
+const res=await fetch(api,{
+headers:{Authorization:`token ${TOKEN}`}
+});
 
-  await fetch(API+"/save?token="+token,{
-    method:"POST",
-    body:fd
-  });
+const json=await res.json();
 
-  alert("保存したよ！");
+const content=JSON.parse(
+decodeURIComponent(escape(atob(json.content)))
+);
+
+let photoData=null;
+
+if(file){
+photoData=await new Promise(resolve=>{
+const r=new FileReader();
+r.onload=()=>resolve(r.result);
+r.readAsDataURL(file);
+});
+}
+
+content.push({
+user,
+text,
+photo:photoData,
+time:new Date().toLocaleString()
+});
+
+const updated=btoa(
+unescape(encodeURIComponent(JSON.stringify(content,null,2)))
+);
+
+await fetch(api,{
+method:"PUT",
+headers:{
+Authorization:`token ${TOKEN}`,
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+message:"update data",
+content:updated,
+sha:json.sha
+})
+});
+
+alert("保存しました！");
 }
