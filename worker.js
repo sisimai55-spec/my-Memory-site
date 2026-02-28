@@ -1,36 +1,19 @@
-export default {
-  async fetch(request, env) {
+async function checkLogin(username, userToken) {
+  // JSON を fetch で取得
+  const res = await fetch("users.json");
+  const users = await res.json();
 
-    const url = new URL(request.url);
-    const token = url.searchParams.get("token");
-
-    let tokens = await env.TOKENS.get("list");
-    tokens = tokens ? JSON.parse(tokens) : [];
-
-    // ===== チェック =====
-    if (url.pathname === "/check") {
-      if (tokens.includes(token)) {
-        return new Response("✅ ログイン成功");
-      }
-      return new Response("❌ トークンエラー");
-    }
-
-    // ===== 追加 =====
-    if (url.pathname === "/add") {
-      if (!tokens.includes(token)) {
-        tokens.push(token);
-        await env.TOKENS.put("list", JSON.stringify(tokens));
-      }
-      return new Response("追加OK");
-    }
-
-    // ===== 削除 =====
-    if (url.pathname === "/delete") {
-      tokens = tokens.filter(t => t !== token);
-      await env.TOKENS.put("list", JSON.stringify(tokens));
-      return new Response("削除OK");
-    }
-
-    return new Response("Worker running");
+  if(users[username] && users[username] === userToken){
+    alert("ログイン成功！✨");
+    // ここで既存の処理をそのまま実行
+  } else {
+    alert("ユーザー名かトークンが違うよ❌");
   }
-};
+}
+
+// ボタン押したときに呼ぶ
+document.getElementById("loginBtn").addEventListener("click", () => {
+  const username = document.getElementById("usernameInput").value.trim();
+  const token = document.getElementById("tokenInput").value.trim();
+  checkLogin(username, token);
+});
