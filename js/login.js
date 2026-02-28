@@ -1,44 +1,41 @@
 async function login() {
 
-  const username =
-    document.getElementById("username").value.trim();
+  const username = document.getElementById("username").value.trim();
+  const token = document.getElementById("token").value.trim();
+  const msg = document.getElementById("msg");
 
-  const token =
-    document.getElementById("token").value.trim();
+  if (!token) {
+    msg.textContent = "トークンを入力してください";
+    return;
+  }
 
-  const url =
-    "https://api.github.com/repos/sisimai55-spec/my-photo-text-site/contents/data/tokens.json?ref=main";
+  try {
+    const res = await fetch("data/tokens.json");
+    const tokens = await res.json();
 
-  const res = await fetch(url);
-  const apiData = await res.json();
+    // トークンチェック
+    let ok = false;
 
-  const text =
-    atob(apiData.content.replace(/\n/g,""));
-
-  const json = JSON.parse(text);
-
-  const users = json.users;
-
-  let success = false;
-
-  // ===== トークンだけチェック =====
-  for (const name in users) {
-    if (users[name] === token) {
-      success = true;
-      localStorage.setItem("user", name);
+    for (const user in tokens) {
+      if (tokens[user].includes(token)) {
+        ok = true;
+        break;
+      }
     }
-  }
 
-  // ===== ユーザ名も入力された場合 =====
-  if (username && users[username] === token) {
-    success = true;
-    localStorage.setItem("user", username);
-  }
+    if (ok) {
+      // ✅ ログイン保存
+      localStorage.setItem("loginToken", token);
+      localStorage.setItem("loginUser", username || "guest");
 
-  if (success) {
-    localStorage.setItem("token", token);
-    location.href = "index.html";
-  } else {
-    alert("ログインできません");
+      // ✅ index.htmlへ移動
+      location.href = "index.html";
+
+    } else {
+      msg.textContent = "トークンが違います";
+    }
+
+  } catch (e) {
+    msg.textContent = "tokens.json が見つかりません";
   }
 }
