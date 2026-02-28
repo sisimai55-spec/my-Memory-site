@@ -1,19 +1,21 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>データを見る</title>
+<title>閲覧</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-<h1>保存されたデータ</h1>
+<h1>投稿一覧</h1>
+<div id="list" class="container"></div>
 
-<button onclick="loadData()">更新</button>
-
-<div id="list"></div>
-
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script>
+requireLogin();
+</script>
 <script src="js/view.js"></script>
 
 </body>
