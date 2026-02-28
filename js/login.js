@@ -1,46 +1,30 @@
-async function login(){
+async function login() {
 
-const token=document.getElementById("token").value.trim();
-const msg=document.getElementById("msg");
+  const tokenInput =
+    document.getElementById("token").value.trim();
 
-msg.innerText="読み込み中...";
+  // GitHub APIから取得
+  const res = await fetch(
+    "https://api.github.com/repos/sisimai55-spec/my-photo-text-site/contents/data/tokens.json?ref=main"
+  );
 
-try{
+  const data = await res.json();
 
-const url =
-`https://api.github.com/repos/${OWNER}/${REPO}/contents/${TOKEN_FILE}?ref=${BRANCH}`;
+  // ⭐ 超重要：Base64 → 普通の文字へ変換
+  const decoded = atob(data.content);
 
-msg.innerText="GitHub接続中...";
+  const json = JSON.parse(decoded);
 
-const res = await fetch(url);
+  const tokens = json.tokens;
 
-msg.innerText="レスポンス取得";
+  // 判定
+  if (tokens.includes(tokenInput)) {
 
-const json = await res.json();
+    localStorage.setItem("token", tokenInput);
 
-if(!json.content){
-msg.innerText="tokens.json が見つかりません";
-return;
-}
+    location.href = "top.html";
 
-msg.innerText="トークン確認中...";
-
-const decoded = atob(json.content.replace(/\n/g,""));
-const tokens = JSON.parse(decoded);
-
-if(tokens[token]==="active"){
-msg.innerText="ログイン成功！";
-localStorage.setItem("loginToken",token);
-
-setTimeout(()=>{
-location.href="index.html";
-},500);
-
-}else{
-msg.innerText="トークンが違います";
-}
-
-}catch(e){
-msg.innerText="エラー："+e;
-}
+  } else {
+    alert("トークンが違います");
+  }
 }
