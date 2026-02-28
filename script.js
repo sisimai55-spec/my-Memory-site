@@ -3,10 +3,11 @@ const users = {
   "keikun1704": "Ab3Xy9K2LmPq8Rt5"
 };
 
-function login() {
+// ボタンを取得してイベント登録
+const loginBtn = document.querySelector("button");
+loginBtn.addEventListener("click", () => {
   const userToken = document.getElementById("token").value.trim();
 
-  // 入力したトークンが users にあるかチェック
   let success = false;
   for(const username in users){
     if(users[username] === userToken){
@@ -16,9 +17,5 @@ function login() {
   }
 
   const result = document.getElementById("result");
-  if(success){
-    result.textContent = "ログイン成功！✨";
-  } else {
-    result.textContent = "トークンが違うよ❌";
-  }
-}
+  result.textContent = success ? "ログイン成功！✨" : "トークンが違うよ❌";
+});
