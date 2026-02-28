@@ -1,28 +1,23 @@
-const API = "https://calm-dawn-dfef.sisimai55.workers.dev/";
-
 async function login() {
-    const token = document.getElementById("token").value;
+  const userToken = document.getElementById("token").value.trim();
 
-    const res = await fetch(API + "/check?token=" + token);
-    const data = await res.text();
+  // JSON からユーザー名とトークンのセットを取得
+  const res = await fetch("users.json");
+  const users = await res.json();
 
-    document.getElementById("result").innerText = data;
-}
+  // JSON の中に入力トークンがあればログイン成功
+  let success = false;
+  for(const username in users){
+    if(users[username] === userToken){
+      success = true;
+      break;
+    }
+  }
 
-async function addToken() {
-    const token = document.getElementById("newToken").value;
-
-    const res = await fetch(API + "/add?token=" + token);
-    const data = await res.text();
-
-    document.getElementById("adminResult").innerText = data;
-}
-
-async function deleteToken() {
-    const token = document.getElementById("deleteToken").value;
-
-    const res = await fetch(API + "/delete?token=" + token);
-    const data = await res.text();
-
-    document.getElementById("adminResult").innerText = data;
+  const result = document.getElementById("result");
+  if(success){
+    result.textContent = "ログイン成功！✨";
+  } else {
+    result.textContent = "トークンが違うよ❌";
+  }
 }
