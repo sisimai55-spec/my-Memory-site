@@ -37,7 +37,7 @@ async function login() {
 
   if (success) {
     localStorage.setItem("token", token);
-    location.href = "top.html";
+    location.href = "index.html";
   } else {
     alert("ログインできません");
   }
