@@ -1,10 +1,8 @@
-function requireLogin(){
-  if(!localStorage.getItem("login")){
-    location.href="index.html";
-  }
-}
+function requireLogin() {
 
-function logout(){
-  localStorage.removeItem("login");
-  location.href="index.html";
+  const token = localStorage.getItem("loginToken");
+
+  if (!token) {
+    location.href = "index.html";
+  }
 }
