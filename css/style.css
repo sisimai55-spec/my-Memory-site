@@ -39,3 +39,16 @@ button {
   width: 300px;
   border-radius: 8px;
 }
+#viewer{
+ position:fixed;
+ inset:0;
+ background:#000c;
+ display:none;
+ justify-content:center;
+ align-items:center;
+}
+
+#viewer img{
+ max-width:90%;
+ max-height:90%;
+}
