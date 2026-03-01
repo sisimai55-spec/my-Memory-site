@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>閲覧</title>
+<title>閲覧ページ</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -10,16 +10,71 @@
 
 <h1>投稿一覧</h1>
 
-<div id="posts"></div>
-
-<a href="post.html">投稿する</a>
+<div id="posts" class="container">
+読み込み中...
+</div>
 
 <script src="js/config.js"></script>
 <script src="js/auth.js"></script>
+
 <script>
+
+// ログイン確認
 requireLogin();
+
+// 投稿読み込み
+loadPosts();
+
+async function loadPosts() {
+
+  const area = document.getElementById("posts");
+  area.innerHTML = "読み込み中...";
+
+  try {
+
+    const res = await fetch(API_URL + "/api/posts");
+    const posts = await res.json();
+
+    area.innerHTML = "";
+
+    if(posts.length === 0){
+      area.innerHTML = "まだ投稿がありません";
+      return;
+    }
+
+    // 新しい順
+    posts.reverse();
+
+    posts.forEach(post => {
+
+      const card = document.createElement("div");
+      card.className = "card";
+
+      let imageHTML = "";
+      if(post.image){
+        imageHTML =
+          `<img src="${post.image}" class="photo">`;
+      }
+
+      card.innerHTML = `
+        <h3>${post.user || "名無し"}</h3>
+        <p>${post.text || ""}</p>
+        ${imageHTML}
+        <small>
+          ${new Date(post.time).toLocaleString()}
+        </small>
+      `;
+
+      area.appendChild(card);
+    });
+
+  } catch(e) {
+    area.innerHTML = "読み込み失敗";
+    console.error(e);
+  }
+}
+
 </script>
-<script src="js/view.js"></script>
 
 </body>
 </html>
