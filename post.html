@@ -2,19 +2,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>保存</title>
+<title>投稿</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-<h1>データ保存</h1>
+<h1>投稿</h1>
 
 <div class="container">
 <textarea id="text" placeholder="テキスト"></textarea>
-<br>
-<button onclick="save()">Save</button>
-<p id="msg"></p>
+<button onclick="post()">投稿</button>
 </div>
 
 <script src="js/config.js"></script>
@@ -22,7 +20,7 @@
 <script>
 requireLogin();
 </script>
-<script src="js/save.js"></script>
+<script src="js/post.js"></script>
 
 </body>
 </html>
