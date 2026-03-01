@@ -1,6 +1,5 @@
-const OWNER="sisimai55-spec";
-const REPO="my-photo-text-site";
-const BRANCH="main";   // ⭐追加
+const BASE =
+"https://sisimai55-spec.github.io/my-photo-text-site";
 
-const DATA_FILE="data/data.json";
-const TOKEN_FILE="data/tokens.json";
+const TOKENS_URL = BASE + "/data/tokens.json";
+const POSTS_URL  = BASE + "/data/posts.json";
