@@ -2,31 +2,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>保存</title>
+<title>ログイン</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-<h1>データ保存</h1>
+<h1>ログイン</h1>
 
 <div class="container">
-
-<input id="user" placeholder="ユーザ名">
-<textarea id="text" placeholder="テキスト"></textarea>
-<input type="file" id="photo">
-
-<br>
-<button onclick="save()">Save</button>
-
+<input id="token" placeholder="トークン">
+<input id="username" placeholder="ユーザ名（任意）">
+<button onclick="login()">ログイン</button>
+<p id="msg"></p>
 </div>
 
 <script src="js/config.js"></script>
-<script src="js/auth.js"></script>
-<script>
-requireLogin();
-</script>
-<script src="js/save.js"></script>
+<script src="js/login.js"></script>
 
 </body>
 </html>
