@@ -1,5 +1,11 @@
-const BASE =
-"https://sisimai55-spec.github.io/my-photo-text-site";
+const CONFIG = {
+  owner: "sisimai55-spec",
+  repo: "my-photo-text-site",
+  branch: "main",
 
-const TOKENS_URL = BASE + "/data/tokens.json";
-const POSTS_URL  = BASE + "/data/posts.json";
+  tokensUrl:
+    "https://raw.githubusercontent.com/sisimai55-spec/my-photo-text-site/main/data/tokens.json",
+
+  postsUrl:
+    "https://raw.githubusercontent.com/sisimai55-spec/my-photo-text-site/main/data/posts.json"
+};
