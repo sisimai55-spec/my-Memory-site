@@ -22,7 +22,7 @@ async function login() {
         "✅ ログイン成功！ページ移動中...";
       
       setTimeout(() => {
-        location.href = "view.html"; // 閲覧ページへ
+        location.href = "top.html"; // 閲覧ページへ
       }, 500);
 
     } else {
