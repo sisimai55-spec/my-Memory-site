@@ -1,54 +1,26 @@
 body {
   font-family: sans-serif;
-  background: #f2f4f8;
+  background: #f2f2f2;
   text-align: center;
-}
-
-h1 {
-  margin-top: 30px;
 }
 
 .container {
   background: white;
   padding: 20px;
-  margin: 20px auto;
+  margin: 40px auto;
   width: 300px;
   border-radius: 10px;
   box-shadow: 0 0 10px #ccc;
 }
 
-input, textarea, button {
-  width: 100%;
+input, button {
+  margin: 10px;
+  padding: 10px;
+  width: 90%;
+}
+
+img {
+  max-width: 100%;
+  border-radius: 10px;
   margin-top: 10px;
-  padding: 10px;
-  font-size: 16px;
-  box-sizing: border-box;
-}
-
-button {
-  background: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 6px;
-}
-
-.post {
-  background: white;
-  margin: 10px auto;
-  padding: 10px;
-  width: 300px;
-  border-radius: 8px;
-}
-#viewer{
- position:fixed;
- inset:0;
- background:#000c;
- display:none;
- justify-content:center;
- align-items:center;
-}
-
-#viewer img{
- max-width:90%;
- max-height:90%;
 }
