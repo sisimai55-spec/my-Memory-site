@@ -1,19 +1,17 @@
-async function login(){
+const users = {
+  "keikun": "1234",
+  "test": "abcd"
+};
 
- const token=document.getElementById("token").value.trim();
- const username=
-   document.getElementById("username").value.trim() || "guest";
+function login() {
+  const user = document.getElementById("username").value;
+  const pass = document.getElementById("password").value;
 
- const res=await fetch("data/tokens.json");
- const data=await res.json();
-
- if(!data.tokens.includes(token)){
-   msg.textContent="トークンが違います";
-   return;
- }
-
- localStorage.token=token;
- localStorage.username=username;
-
- location.href="view.html";
+  if (users[user] === pass) {
+    localStorage.setItem("loginUser", user);
+    location.href = "view.html";
+  } else {
+    document.getElementById("msg").textContent =
+      "ログイン失敗";
+  }
 }
