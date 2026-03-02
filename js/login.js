@@ -1,53 +1,26 @@
-const TOKENS_URL = "data/tokens.json";
+function login() {
 
-async function login() {
+  const username = document.getElementById("username").value;
+  const token = document.getElementById("token").value;
 
-  const user =
-    document.getElementById("username").value.trim();
+  // 仮ログイン（あとでGitHub認証に変える）
+  if (username && token) {
 
-  const token =
-    document.getElementById("token").value.trim();
+    // ★これが超重要
+    localStorage.setItem("loginUser", username);
 
-  const msg = document.getElementById("msg");
+    // ログイン後移動
+    const next = localStorage.getItem("afterLogin");
 
-  if (!user || !token) {
-    msg.textContent = "入力してください";
-    return;
-  }
-
-  try {
-    const res = await fetch(TOKENS_URL);
-    const tokens = await res.json();
-
-    // ✔ ユーザ存在チェック
-    if (!tokens[user]) {
-      msg.textContent = "ユーザが存在しません";
-      return;
-    }
-
-    // ✔ トークン一致チェック
-    if (tokens[user].includes(token)) {
-
-      localStorage.setItem("loginUser", user);
-
-      msg.textContent = "ログイン成功！";
-
-      // ログイン後戻るページ
-      const next =
-        localStorage.getItem("afterLogin") || "top.html";
-
+    if (next) {
       localStorage.removeItem("afterLogin");
-
-      setTimeout(() => {
-        location.href = next;
-      }, 500);
-
+      location.href = next;
     } else {
-      msg.textContent = "トークンが違います";
+      location.href = "top.html";
     }
 
-  } catch (e) {
-    console.error(e);
-    msg.textContent = "データ読み込み失敗";
+  } else {
+    document.getElementById("msg").textContent =
+      "ユーザ名とトークンを入力してね";
   }
 }
