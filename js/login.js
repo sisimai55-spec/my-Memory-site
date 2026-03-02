@@ -1,29 +1,53 @@
-// ログインユーザー表示
-const user = localStorage.getItem("loginUser");
+const TOKENS_URL = "data/tokens.json";
 
-if (user) {
-  document.getElementById("user").textContent =
-    "ログイン中: " + user;
-}
+async function login() {
 
-// 閲覧（ログイン不要にしてもOK）
-function goView() {
-  location.href = "view.html";
-}
+  const user =
+    document.getElementById("username").value.trim();
 
-// 投稿（ログイン必須）
-function goPost() {
-  const user = localStorage.getItem("loginUser");
+  const token =
+    document.getElementById("token").value.trim();
 
-  if (!user) {
-    localStorage.setItem("afterLogin", "post.html");
-    location.href = "index.html";
-  } else {
-    location.href = "post.html";
+  const msg = document.getElementById("msg");
+
+  if (!user || !token) {
+    msg.textContent = "入力してください";
+    return;
   }
-}
 
-function logout() {
-  localStorage.removeItem("loginUser");
-  alert("ログアウトしました");
+  try {
+    const res = await fetch(TOKENS_URL);
+    const tokens = await res.json();
+
+    // ✔ ユーザ存在チェック
+    if (!tokens[user]) {
+      msg.textContent = "ユーザが存在しません";
+      return;
+    }
+
+    // ✔ トークン一致チェック
+    if (tokens[user].includes(token)) {
+
+      localStorage.setItem("loginUser", user);
+
+      msg.textContent = "ログイン成功！";
+
+      // ログイン後戻るページ
+      const next =
+        localStorage.getItem("afterLogin") || "top.html";
+
+      localStorage.removeItem("afterLogin");
+
+      setTimeout(() => {
+        location.href = next;
+      }, 500);
+
+    } else {
+      msg.textContent = "トークンが違います";
+    }
+
+  } catch (e) {
+    console.error(e);
+    msg.textContent = "データ読み込み失敗";
+  }
 }
