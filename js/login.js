@@ -1,26 +1,26 @@
 function login() {
 
-  const username = document.getElementById("username").value;
-  const token = document.getElementById("token").value;
+  const username = document.getElementById("username").value.trim();
+  const token = document.getElementById("token").value.trim();
 
-  // 仮ログイン（あとでGitHub認証に変える）
-  if (username && token) {
-
-    // ★これが超重要
-    localStorage.setItem("loginUser", username);
-
-    // ログイン後移動
-    const next = localStorage.getItem("afterLogin");
-
-    if (next) {
-      localStorage.removeItem("afterLogin");
-      location.href = next;
-    } else {
-      location.href = "top.html";
-    }
-
-  } else {
+  if (!username || !token) {
     document.getElementById("msg").textContent =
-      "ユーザ名とトークンを入力してね";
+      "入力してね";
+    return;
+  }
+
+  // 保存
+  localStorage.setItem("loginUser", username);
+
+  console.log("保存した:", localStorage.getItem("loginUser"));
+
+  // 戻り先
+  const next = localStorage.getItem("afterLogin");
+
+  if (next) {
+    localStorage.removeItem("afterLogin");
+    location.href = next;
+  } else {
+    location.href = "./top.html";
   }
 }
