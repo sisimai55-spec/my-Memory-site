@@ -1,25 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>トップ</title>
+<title>Memory Site</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-<h1>トップ</h1>
-
 <div class="container">
-<button onclick="location.href='save.html'">保存</button>
-<button onclick="location.href='view.html'">閲覧</button>
-<button onclick="logout()">ログアウト</button>
+  <h1>📘 Memory Site</h1>
+
+  <button onclick="goView()">📖 閲覧する</button>
+  <button onclick="goPost()">📝 投稿する</button>
+
+  <br><br>
+  <button onclick="logout()">🚪 ログアウト</button>
+
+  <p id="user"></p>
 </div>
 
-<script src="js/auth.js"></script>
-<script>
-requireLogin();
-</script>
+<script src="js/top.js"></script>
 
 </body>
 </html>
