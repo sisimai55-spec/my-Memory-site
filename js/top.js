@@ -1,34 +1,36 @@
-// ログインユーザー取得
+// ===== ログインチェック =====
 const user = localStorage.getItem("loginUser");
+const userText = document.getElementById("user");
 
-// 要素がある時だけ表示（←重要）
-const userEl = document.getElementById("user");
-
-if (user && userEl) {
-  userEl.textContent = "ログイン中: " + user;
+if (user) {
+  userText.textContent = "ログイン中: " + user;
+} else {
+  userText.textContent = "未ログイン";
 }
 
-// 閲覧
+// ===== 閲覧 =====
 function goView() {
-  location.href = "view.html";
+  location.href = "./view.html";
 }
 
-// 投稿（ログイン必須）
+// ===== 投稿 =====
 function goPost() {
 
   const user = localStorage.getItem("loginUser");
 
-  if (!user) {
-    localStorage.setItem("afterLogin", "post.html");
-    location.href = "index.html";
-  } else {
-    location.href = "post.html";
+  console.log("loginUser =", user); // ←確認用
+
+  if (!user || user === "null") {
+    localStorage.setItem("afterLogin", "./post.html");
+    location.href = "./index.html";
+    return;
   }
+
+  location.href = "./post.html";
 }
 
-// ログアウト
+// ===== ログアウト =====
 function logout() {
   localStorage.removeItem("loginUser");
   alert("ログアウトしました");
-  location.href = "index.html";
 }
