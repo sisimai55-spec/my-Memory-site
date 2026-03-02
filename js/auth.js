@@ -1,8 +1,5 @@
-function requireLogin() {
-
-  const token = localStorage.getItem("loginToken");
-
-  if (!token) {
-    location.href = "index.html";
-  }
+function requireLogin(){
+ if(!localStorage.token){
+   location.href="index.html";
+ }
 }
