@@ -2,16 +2,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>閲覧</title>
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="style.css">
 </head>
-
-<body>
-
-<h1>投稿一覧</h1>
-<div id="posts"></div>
-
-<script src="js/view.js"></script>
-
+<body onload="loadPosts()">
+<header>タイムライン</header>
+<div class="container">
+  <div id="posts"></div>
+</div>
+<script src="script.js"></script>
 </body>
 </html>
