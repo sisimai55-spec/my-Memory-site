@@ -1,4 +1,4 @@
-const WORKER = "https://my-memory-site.pages.dev/";
+const WORKER = "あなたのWorkerのURL";
 
 let authToken = localStorage.getItem("token") || "";
 
@@ -10,6 +10,11 @@ async function login() {
   const user = document.getElementById("user").value;
   const pass = document.getElementById("pass").value;
 
+  if (!user || !pass) {
+    alert("ユーザー名とパスワードを入力してね");
+    return;
+  }
+
   const res = await fetch(WORKER + "/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -20,6 +25,7 @@ async function login() {
     const data = await res.json();
     authToken = data.token;
     localStorage.setItem("token", authToken);
+    alert("ログイン成功！");
     location.href = "menu.html";
   } else {
     alert("ログイン失敗");
@@ -27,7 +33,7 @@ async function login() {
 }
 
 /* ===========================
-   🆕 新規登録
+   🆕 新規登録（招待制）
 =========================== */
 async function register() {
 
@@ -35,50 +41,25 @@ async function register() {
   const newUser = document.getElementById("newUser").value;
   const newPass = document.getElementById("newPass").value;
 
+  if (!inviteToken || !newUser || !newPass) {
+    alert("全部入力してね");
+    return;
+  }
+
   const res = await fetch(WORKER + "/register", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ inviteToken, newUser, newPass })
+    body: JSON.stringify({
+      inviteToken,
+      newUser,
+      newPass
+    })
   });
 
   if (res.ok) {
-    alert("登録成功！");
+    alert("登録成功！ログインしてね");
   } else {
-    alert("登録失敗");
+    const text = await res.text();
+    alert("登録失敗: " + text);
   }
-}
-
-/* ===========================
-   📦 投稿
-=========================== */
-async function uploadPost(filename, base64) {
-
-  const res = await fetch(WORKER + "/upload", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      token: authToken,
-      filename,
-      zip: base64
-    })
-  });
-
-  if (!res.ok) alert("投稿失敗");
-}
-
-/* ===========================
-   🗑 削除
-=========================== */
-async function deletePost(filename) {
-
-  const res = await fetch(WORKER + "/delete", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      token: authToken,
-      filename
-    })
-  });
-
-  if (!res.ok) alert("削除失敗");
 }
