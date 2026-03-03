@@ -2,24 +2,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>投稿</title>
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
-<h1>投稿</h1>
-
+<header>投稿</header>
 <div class="container">
-<textarea id="text"></textarea>
-<br>
-<button onclick="post()">投稿</button>
+  <textarea id="text" placeholder="テキスト"></textarea><br>
+  <input type="file" id="image"><br>
+  <button class="green" onclick="post()">投稿</button>
 </div>
-
-<script src="js/config.js"></script>
-<script src="js/auth.js"></script>
-<script>requireLogin();</script>
-<script src="js/post.js"></script>
-
+<script src="script.js"></script>
 </body>
 </html>
