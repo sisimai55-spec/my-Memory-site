@@ -1,0 +1,186 @@
+/* 全体 */
+
+body{
+font-family:sans-serif;
+background:#f2f4f8;
+margin:0;
+padding:20px;
+text-align:center;
+}
+
+
+
+/* タイトル */
+
+h1,h2{
+color:#333;
+}
+
+
+
+/* 入力 */
+
+input,textarea{
+
+width:90%;
+max-width:400px;
+
+padding:10px;
+
+margin:8px;
+
+border-radius:8px;
+
+border:1px solid #ccc;
+
+font-size:16px;
+
+}
+
+
+
+/* ボタン */
+
+button{
+
+padding:10px 20px;
+
+margin:8px;
+
+border:none;
+
+border-radius:8px;
+
+background:#4CAF50;
+
+color:white;
+
+font-size:16px;
+
+cursor:pointer;
+
+}
+
+button:hover{
+
+background:#45a049;
+
+}
+
+
+
+/* 投稿カード */
+
+.post{
+
+background:white;
+
+margin:20px auto;
+
+padding:15px;
+
+max-width:500px;
+
+border-radius:12px;
+
+box-shadow:0 3px 8px rgba(0,0,0,0.1);
+
+text-align:left;
+
+}
+
+
+
+/* 投稿ユーザー */
+
+.post b{
+
+color:#2196f3;
+
+}
+
+
+
+/* 投稿画像 */
+
+.post img{
+
+width:100%;
+
+margin-top:10px;
+
+border-radius:8px;
+
+}
+
+
+
+/* いいねボタン */
+
+.post button{
+
+background:#2196f3;
+
+}
+
+.post button:hover{
+
+background:#1e88e5;
+
+}
+
+
+
+/* 削除ボタン */
+
+.delete{
+
+background:#e53935;
+
+}
+
+.delete:hover{
+
+background:#c62828;
+
+}
+
+
+
+/* 管理画面 */
+
+.user{
+
+background:white;
+
+margin:10px auto;
+
+padding:10px;
+
+max-width:400px;
+
+border-radius:10px;
+
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
+
+}
+
+
+
+/* スマホ対応 */
+
+@media (max-width:600px){
+
+body{
+
+padding:10px;
+
+}
+
+input,textarea{
+
+width:95%;
+
+}
+
+}
